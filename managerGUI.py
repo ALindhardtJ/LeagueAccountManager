@@ -943,21 +943,17 @@ class MyWindow(QWidget):
 
             if region != "Region" or summonername != "" or username != "" or password != "":
                 pkID, region, sumName, username, password = dbHandler.get_account(self.selected_pkID)
-
+                tempAccountList = [(pkID, region, sumName, username, password)]
 
                 counter = 0
                 for account in self.accounts:
                     if account[0] == pkID:
-                        temp_list = list(account)
-                        temp_list[1] = region
-                        temp_list[2] = sumName
-                        temp_list[3] = username
-                        temp_list[4] = password
-                        temp_tuple = tuple(temp_list)
-                        account = temp_tuple
-                        self.accounts[counter] = account
+                        self.accounts[counter] = (pkID, region, sumName, username, password)
                         break
                     counter += 1
+
+                thread = Thread(target=self.fetch_account_data, args=(tempAccountList, "single_edit",))
+                thread.start()
 
             self.GUI()
             self.set_geometry()
@@ -1179,6 +1175,91 @@ class MyWindow(QWidget):
                 else:
                     sleep(1)
 
+        elif what == "single_edit":
+            done = False
+            self.collecting_data = True
+            while not done:
+                if not self.loading_all_summoner_data:
+                    if len(self.accounts) == len(self.summoner_data): 
+                        for account in liste:
+                            try:
+                                pkID, region, sumName, username, password = account
+
+                                LOG_URL = "https://www.leagueofgraphs.com/summoner/"
+                                WOL_URL = "https://wol.gg/stats/"
+                                HEADERS = {'User-Agent': 'My User Agent 1.0'}
+
+                                url = f"{LOG_URL}{str.lower(region)}/{sumName}/last-30-days"
+
+                                response = requests.get(url, headers=HEADERS)
+
+                                soup = BeautifulSoup(response.content, 'html.parser')
+                                
+                                level = int(str(str.split(soup.find(class_="bannerSubtitle").text.strip(), "-")[0])[5:])
+                                rank = str(soup.find(class_="leagueTier").text.strip())
+                                gamesThirty = int(soup.find(class_="summonerProfileQueuesTabs tabsContainer").find(class_="tabs-content").find("div", { "data-tab-id" : "championsData-all-queues" }).find(class_="pie-chart small").text.strip())
+                                
+                                url = f"{WOL_URL}{str.lower(region)}/{sumName}/"
+
+                                response = requests.get(url, headers=HEADERS)
+
+
+                                soup = BeautifulSoup(response.content, 'html.parser')
+
+                                time_played_minutes = soup.find(id="time-minutes")
+                                time_played_minutes = "".join(filter(str.isdigit, time_played_minutes.text.strip()))
+                                minutes = int(time_played_minutes)
+                                hours = round(minutes/60)
+
+                                summoner_data = (level, rank, gamesThirty, hours)
+
+                                counter = 0
+                                for account in self.accounts:
+                                    if account[0] == pkID:
+                                        self.summoner_data[counter] = summoner_data
+                                        break
+                                    counter += 1
+
+                                done = True
+
+                                done2 = False
+                                while not done2:
+                                    if self.current_window != "account manager":
+                                        self.collecting_data = False
+                                        self.loading_all_summoner_data = False
+                                        done2 = True
+                                    else:
+                                        self.collecting_data = False
+                                        self.loading_all_summoner_data = False
+                                        self.updateWindow()
+                                        done2 = True
+
+                            except:
+                                pkID, region, sumName, username, password = account
+                                counter = 0
+                                for account in self.accounts:
+                                    if account[0] == pkID:
+                                        self.summoner_data[counter] = ("No data", "No data", "No data", "No data")
+                                        break
+                                    counter += 1
+                                done = True
+
+                                done2 = False
+                                while not done2:
+                                    if self.current_window != "account manager":
+                                        self.collecting_data = False
+                                        self.loading_all_summoner_data = False
+                                        done2 = True
+                                    else:
+                                        self.collecting_data = False
+                                        self.loading_all_summoner_data = False
+                                        self.updateWindow()
+                                        done2 = True
+                    else:
+                        done = True
+                else:
+                    sleep(1)
+
     # Update window when all sum data has been fetched
     def updateWindowThread(self):
         done = False
@@ -1191,9 +1272,9 @@ class MyWindow(QWidget):
                     self.loading_all_summoner_data = False
                     done = True
                 else:
-                    self.updateWindow()
                     self.collecting_data = False
                     self.loading_all_summoner_data = False
+                    self.updateWindow()
                     done = True
 
     # Login when pressing login
@@ -1222,7 +1303,7 @@ class MyWindow(QWidget):
         keyboard.type(self.selected_password)
         keyboard.press(Key.enter)
         keyboard.release(Key.enter)
-
+        
         sleep(1)
         while not closed:
             if "RiotClientUx.exe" in (p.name() for p in psutil.process_iter()):
