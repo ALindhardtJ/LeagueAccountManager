@@ -238,7 +238,7 @@ class MyWindow(QWidget):
             if self.collecting_data:
                 self.collecting_data_label = QLabel(self)
                 self.collecting_data_label.setText("Collecting account data")
-                self.collecting_data_label.move(self.convToRectWidth(900), self.convToRectHeight(75))
+                self.collecting_data_label.move(self.convToRectWidth(895), self.convToRectHeight(75))
                 self.collecting_data_label.setStyleSheet("color: orange")
                 self.widgets["labels"].append(self.collecting_data_label)
             else:
