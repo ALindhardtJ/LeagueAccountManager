@@ -1287,8 +1287,11 @@ class MyWindow(QWidget):
             os.system("TASKKILL /F /IM LeagueClientUx.exe")
             sleep(9)
 
-        subprocess.call(["C:\Riot Games\League of Legends\LeagueClient.exe"])
-
+        try:
+            subprocess.call(["C:\Riot Games\League of Legends\LeagueClient.exe"])
+        except:
+            subprocess.call(["E:\Riot Games\League of Legends\LeagueClient.exe"])
+            
         while not ready:
             if "RiotClientUx.exe" in (p.name() for p in psutil.process_iter()):
                 sleep(1)
