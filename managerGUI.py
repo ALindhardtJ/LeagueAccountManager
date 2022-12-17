@@ -1112,6 +1112,8 @@ class MyWindow(QWidget):
                     
                     level = int(str(str.split(soup.find(class_="bannerSubtitle").text.strip(), "-")[0])[5:])
                     rank = str(soup.find(class_="leagueTier").text.strip())
+                    lp = soup.find(class_="leaguePoints").text.strip()
+                    rank = rank + " - " + lp + " LP"
                     gamesThirty = int(soup.find(class_="summonerProfileQueuesTabs tabsContainer").find(class_="tabs-content").find("div", { "data-tab-id" : "championsData-all-queues" }).find(class_="pie-chart small").text.strip())
                     
                     url = f"{WOL_URL}{str.lower(region)}/{sumName}/"
@@ -1150,6 +1152,8 @@ class MyWindow(QWidget):
                                 
                                 level = int(str(str.split(soup.find(class_="bannerSubtitle").text.strip(), "-")[0])[5:])
                                 rank = str(soup.find(class_="leagueTier").text.strip())
+                                lp = soup.find(class_="leaguePoints").text.strip()
+                                rank = rank + " - " + lp + " LP"
                                 gamesThirty = int(soup.find(class_="summonerProfileQueuesTabs tabsContainer").find(class_="tabs-content").find("div", { "data-tab-id" : "championsData-all-queues" }).find(class_="pie-chart small").text.strip())
                                 
                                 url = f"{WOL_URL}{str.lower(region)}/{sumName}/"
@@ -1197,6 +1201,8 @@ class MyWindow(QWidget):
                                 
                                 level = int(str(str.split(soup.find(class_="bannerSubtitle").text.strip(), "-")[0])[5:])
                                 rank = str(soup.find(class_="leagueTier").text.strip())
+                                lp = soup.find(class_="leaguePoints").text.strip()
+                                rank = rank + " - " + lp + " LP"
                                 gamesThirty = int(soup.find(class_="summonerProfileQueuesTabs tabsContainer").find(class_="tabs-content").find("div", { "data-tab-id" : "championsData-all-queues" }).find(class_="pie-chart small").text.strip())
                                 
                                 url = f"{WOL_URL}{str.lower(region)}/{sumName}/"
@@ -1286,12 +1292,11 @@ class MyWindow(QWidget):
         if "LeagueClientUx.exe" in (p.name() for p in psutil.process_iter()):
             os.system("TASKKILL /F /IM LeagueClientUx.exe")
             sleep(9)
-
         try:
             subprocess.call(["C:\Riot Games\League of Legends\LeagueClient.exe"])
         except:
             subprocess.call(["E:\Riot Games\League of Legends\LeagueClient.exe"])
-            
+
         while not ready:
             if "RiotClientUx.exe" in (p.name() for p in psutil.process_iter()):
                 sleep(1)
@@ -1306,20 +1311,21 @@ class MyWindow(QWidget):
         keyboard.type(self.selected_password)
         keyboard.press(Key.enter)
         keyboard.release(Key.enter)
-        
-        sleep(1)
+        sleep(7)
+
         while not closed:
-            if "RiotClientUx.exe" in (p.name() for p in psutil.process_iter()):
-                sleep(1)
-                try:
-                    os.system("TASKKILL /F /IM RiotClientUX.exe")
-                    closed = True
-                except:
+            if "LeagueClientUx.exe" in (p.name() for p in psutil.process_iter()):
+                if "RiotClientUx.exe" in (p.name() for p in psutil.process_iter()):
+                    try:
+                        os.system("TASKKILL /F /IM RiotClientUX.exe")
+                        closed = True
+                    except:
+                        closed = True
+                else:
                     closed = True
             else:
                 closed = True
                 
-
 #------------------------------------------------------------------------------------------------------
 #Set geometry func
     def set_geometry(self):
