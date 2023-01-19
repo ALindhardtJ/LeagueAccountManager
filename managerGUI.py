@@ -1299,7 +1299,7 @@ class MyWindow(QWidget):
 
         while not ready:
             if "RiotClientUx.exe" in (p.name() for p in psutil.process_iter()):
-                sleep(1)
+                sleep(3)
                 ready = True
             else:
                 sleep(0.25)
