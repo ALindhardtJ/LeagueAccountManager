@@ -1,6 +1,4 @@
 import sqlite3
-from os import path
-
 
 class AccountManagerDB():
     def __init__(self):
