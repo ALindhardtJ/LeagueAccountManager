@@ -99,7 +99,9 @@ class MyWindow(QWidget):
                             """
         self.setWindowTitle("League Account Manager")
         self.update_accounts()
+
         self.fetch_account_data()
+
         # GUI init
         self.GUI()
 
@@ -123,6 +125,8 @@ class MyWindow(QWidget):
             self.buttons("edit")
             # 'champs register/check/delete' button definition
             self.buttons("champions")
+            # 'refresh account data' button
+            self.buttons("refresh")
             # 'headers for accounts list'
             self.headers()
             # 'accounts list'
@@ -339,48 +343,36 @@ class MyWindow(QWidget):
                 self.subm_acc_button.clicked.connect(self.subm_acc_button_clicked)
                 self.widgets["buttons"].append(self.subm_acc_button)
 
-    # Login button
-        elif button == "login":
-            self.login_button = QPushButton(self)
-            self.login_button.setCursor(QCursor(Qt.PointingHandCursor))
-            self.login_button.setStyleSheet(self.button_stylesheet)
-            self.login_button.move(self.convToRectWidth(445), self.convToRectHeight(15))
-            self.login_button.resize(self.convToRectWidth(100), self.convToRectHeight(40))
-            self.login_button.setText("Login")
-            self.login_button.setFont(QFont('AnyStyle', self.font_size))
-            self.login_button.clicked.connect(self.login_button_clicked)
-            self.widgets["buttons"].append(self.login_button)
+    # Edit button 
+        elif button == "edit":
+            self.edit_button = QPushButton(self)
+            self.edit_button.setCursor(QCursor(Qt.PointingHandCursor))
+            self.edit_button.setStyleSheet(self.button_stylesheet)
+            self.edit_button.move(self.convToRectWidth(445), self.convToRectHeight(15))
+            self.edit_button.resize(self.convToRectWidth(70), self.convToRectHeight(40))
+            self.edit_button.setText("Edit")
+            self.edit_button.setFont(QFont('AnyStyle', self.font_size))
+            self.edit_button.clicked.connect(self.edit_button_clicked)
+            self.widgets["buttons"].append(self.edit_button)
 
     # Info button    
         elif button == "info":
             self.info_button = QPushButton(self)
             self.info_button.setCursor(QCursor(Qt.PointingHandCursor))
             self.info_button.setStyleSheet(self.button_stylesheet)
-            self.info_button.move(self.convToRectWidth(555), self.convToRectHeight(15))
-            self.info_button.resize(self.convToRectWidth(70),self.convToRectHeight(40))
+            self.info_button.move(self.convToRectWidth(525), self.convToRectHeight(15))
+            self.info_button.resize(self.convToRectWidth(90),self.convToRectHeight(40))
             self.info_button.setText("Info")
             self.info_button.setFont(QFont('AnyStyle', self.font_size))
             self.info_button.clicked.connect(self.info_button_clicked)
             self.widgets["buttons"].append(self.info_button)
-
-    # Edit button 
-        elif button == "edit":
-            self.edit_button = QPushButton(self)
-            self.edit_button.setCursor(QCursor(Qt.PointingHandCursor))
-            self.edit_button.setStyleSheet(self.button_stylesheet)
-            self.edit_button.move(self.convToRectWidth(635), self.convToRectHeight(15))
-            self.edit_button.resize(self.convToRectWidth(90), self.convToRectHeight(40))
-            self.edit_button.setText("Edit")
-            self.edit_button.setFont(QFont('AnyStyle', self.font_size))
-            self.edit_button.clicked.connect(self.edit_button_clicked)
-            self.widgets["buttons"].append(self.edit_button)
 
     # Delete button    
         elif button == "delete":
             self.delete_button = QPushButton(self)
             self.delete_button.setCursor(QCursor(Qt.PointingHandCursor))
             self.delete_button.setStyleSheet(self.button_stylesheet)
-            self.delete_button.move(self.convToRectWidth(735), self.convToRectHeight(15))
+            self.delete_button.move(self.convToRectWidth(625), self.convToRectHeight(15))
             self.delete_button.resize(self.convToRectWidth(100), self.convToRectHeight(40))
             self.delete_button.setText("Delete")
             self.delete_button.setFont(QFont('AnyStyle', self.font_size))
@@ -392,12 +384,38 @@ class MyWindow(QWidget):
             self.champions_button = QPushButton(self)
             self.champions_button.setCursor(QCursor(Qt.PointingHandCursor))
             self.champions_button.setStyleSheet(self.button_stylesheet)
-            self.champions_button.move(self.convToRectWidth(845), self.convToRectHeight(15))
-            self.champions_button.resize(self.convToRectWidth(110),self.convToRectHeight(40))
+            self.champions_button.move(self.convToRectWidth(735), self.convToRectHeight(15))
+            self.champions_button.resize(self.convToRectWidth(100),self.convToRectHeight(40))
             self.champions_button.setText("Champions")
             self.champions_button.setFont(QFont('AnyStyle', self.font_size))
             self.champions_button.clicked.connect(self.champions_button_clicked)
             self.widgets["buttons"].append(self.champions_button)
+    
+    #  Login button
+        elif button == "login":
+            self.login_button = QPushButton(self)
+            self.login_button.setCursor(QCursor(Qt.PointingHandCursor))
+            self.login_button.setStyleSheet(self.button_stylesheet)
+            self.login_button.move(self.convToRectWidth(845), self.convToRectHeight(15))
+            self.login_button.resize(self.convToRectWidth(110), self.convToRectHeight(40))
+            self.login_button.setText("Login")
+            self.login_button.setFont(QFont('AnyStyle', self.font_size))
+            self.login_button.clicked.connect(self.login_button_clicked)
+            self.widgets["buttons"].append(self.login_button)
+
+
+        elif button == "refresh":
+            if not self.collecting_data:
+                self.refresh_button = QPushButton(self)
+                self.refresh_button.setCursor(QCursor(Qt.PointingHandCursor))
+                self.refresh_button.setStyleSheet(self.button_stylesheet)
+                self.refresh_button.move(self.convToRectWidth(845), self.convToRectHeight(60))
+                self.refresh_button.resize(self.convToRectWidth(110),self.convToRectHeight(40))
+                self.refresh_button.setText("Refresh")
+                self.refresh_button.setFont(QFont('AnyStyle', self.font_size))
+                self.refresh_button.clicked.connect(self.refresh_button_clicked)
+                self.widgets["buttons"].append(self.refresh_button)
+
     
 
     # Combo box descriptions 
@@ -614,19 +632,27 @@ class MyWindow(QWidget):
 
         self.region_label = QLabel(self)
         self.region_label.move(self.convToRectWidth(445), self.convToRectHeight(65))
-        self.region_label.resize(self.convToRectWidth(100), self.convToRectHeight(40))
+        self.region_label.resize(self.convToRectWidth(70), self.convToRectHeight(40))
         self.region_label.setText("Region")
         self.region_label.setFont(QFont('AnyStyle', self.font_size))
         self.region_label.setStyleSheet(self.headers_stylesheet)
         self.widgets["labels"].append(self.region_label)
        
         self.level_label = QLabel(self)
-        self.level_label.move(self.convToRectWidth(555), self.convToRectHeight(65))
-        self.level_label.resize(self.convToRectWidth(70), self.convToRectHeight(40))
-        self.level_label.setText("Level")
+        self.level_label.move(self.convToRectWidth(525), self.convToRectHeight(65))
+        self.level_label.resize(self.convToRectWidth(90), self.convToRectHeight(40))
+        self.level_label.setText("Games")
         self.level_label.setFont(QFont('AnyStyle', self.font_size))
         self.level_label.setStyleSheet(self.headers_stylesheet)
-        self.widgets["labels"].append(self.level_label)        
+        self.widgets["labels"].append(self.level_label) 
+
+        self.level_label = QLabel(self)
+        self.level_label.move(self.convToRectWidth(625), self.convToRectHeight(65))
+        self.level_label.resize(self.convToRectWidth(100), self.convToRectHeight(40))
+        self.level_label.setText("Winrate")
+        self.level_label.setFont(QFont('AnyStyle', self.font_size))
+        self.level_label.setStyleSheet(self.headers_stylesheet)
+        self.widgets["labels"].append(self.level_label)            
 
 
     # list accounts in db
@@ -635,55 +661,65 @@ class MyWindow(QWidget):
         name_move_x, name_move_y = self.convToRectWidth(65), self.convToRectHeight(65)
         rank_move_x, rank_move_y = self.convToRectWidth(255), self.convToRectHeight(65)
         region_move_x, region_move_y = self.convToRectWidth(445), self.convToRectHeight(65)
-        level_move_x, level_move_y = self.convToRectWidth(555), self.convToRectHeight(65)
+        games_move_x, games_move_y = self.convToRectWidth(525), self.convToRectHeight(65)
+        win_loss_move_x, win_loss_move_y = self.convToRectWidth(625), self.convToRectHeight(65)
         opgg_button_move_x, opgg_button_move_y = self.convToRectWidth(735), self.convToRectHeight(65)
         account_button_move_x, account_button_move_y = self.convToRectWidth(845), self.convToRectHeight(65)
 
         for pkID, sumData in self.accounts.items():
-            self.account_label = QLabel(self)
-            self.account_label.move(id_move_x, id_move_y + self.convToRectHeight(40))
+            self.id_label = QLabel(self)
+            self.id_label.move(id_move_x, id_move_y + self.convToRectHeight(40))
             id_move_y += self.convToRectHeight(40)
-            self.account_label.resize(self.convToRectWidth(40), self.convToRectHeight(40))
-            self.account_label.setText(str(pkID))
-            self.account_label.setFont(QFont('AnyStyle', self.font_size))
-            self.account_label.setStyleSheet(self.headers_stylesheet)
-            self.widgets["labels"].append(self.account_label)
+            self.id_label.resize(self.convToRectWidth(40), self.convToRectHeight(40))
+            self.id_label.setText(str(pkID))
+            self.id_label.setFont(QFont('AnyStyle', self.font_size))
+            self.id_label.setStyleSheet(self.headers_stylesheet)
+            self.widgets["labels"].append(self.id_label)
 
-            self.account_label = QLabel(self)
-            self.account_label.move(name_move_x, name_move_y + self.convToRectHeight(40))
+            self.summoner_name_label = QLabel(self)
+            self.summoner_name_label.move(name_move_x, name_move_y + self.convToRectHeight(40))
             name_move_y += self.convToRectHeight(40)
-            self.account_label.resize(self.convToRectWidth(180), self.convToRectHeight(40))
-            self.account_label.setText(str(sumData.get("summoner_name")))
-            self.account_label.setFont(QFont('AnyStyle', self.font_size))
-            self.account_label.setStyleSheet(self.headers_stylesheet)
-            self.widgets["labels"].append(self.account_label)
+            self.summoner_name_label.resize(self.convToRectWidth(180), self.convToRectHeight(40))
+            self.summoner_name_label.setText(str(sumData.get("summoner_name")))
+            self.summoner_name_label.setFont(QFont('AnyStyle', self.font_size))
+            self.summoner_name_label.setStyleSheet(self.headers_stylesheet)
+            self.widgets["labels"].append(self.summoner_name_label)
 
-            self.account_label = QLabel(self)
-            self.account_label.move(rank_move_x, rank_move_y + self.convToRectHeight(40))
+            self.rank_label = QLabel(self)
+            self.rank_label.move(rank_move_x, rank_move_y + self.convToRectHeight(40))
             rank_move_y += self.convToRectHeight(40)
-            self.account_label.resize(self.convToRectWidth(180), self.convToRectHeight(40))
-            self.account_label.setText(str(sumData.get("rank")))
-            self.account_label.setFont(QFont('AnyStyle', self.font_size))
-            self.account_label.setStyleSheet(self.headers_stylesheet)
-            self.widgets["labels"].append(self.account_label)
+            self.rank_label.resize(self.convToRectWidth(180), self.convToRectHeight(40))
+            self.rank_label.setText(str(sumData.get("rank")))
+            self.rank_label.setFont(QFont('AnyStyle', self.font_size))
+            self.rank_label.setStyleSheet(self.headers_stylesheet)
+            self.widgets["labels"].append(self.rank_label)
 
-            self.account_label = QLabel(self)
-            self.account_label.move(region_move_x, region_move_y + self.convToRectHeight(40))
+            self.region_label = QLabel(self)
+            self.region_label.move(region_move_x, region_move_y + self.convToRectHeight(40))
             region_move_y += self.convToRectHeight(40)
-            self.account_label.resize(self.convToRectWidth(100), self.convToRectHeight(40))
-            self.account_label.setText(sumData.get("region"))
-            self.account_label.setFont(QFont('AnyStyle', self.font_size))
-            self.account_label.setStyleSheet(self.headers_stylesheet)
-            self.widgets["labels"].append(self.account_label)
+            self.region_label.resize(self.convToRectWidth(70), self.convToRectHeight(40))
+            self.region_label.setText(sumData.get("region"))
+            self.region_label.setFont(QFont('AnyStyle', self.font_size))
+            self.region_label.setStyleSheet(self.headers_stylesheet)
+            self.widgets["labels"].append(self.region_label)
 
-            self.account_label = QLabel(self)
-            self.account_label.move(level_move_x, level_move_y + self.convToRectHeight(40))
-            level_move_y += self.convToRectHeight(40)
-            self.account_label.resize(self.convToRectWidth(70), self.convToRectHeight(40))
-            self.account_label.setText(str(sumData.get("level")))
-            self.account_label.setFont(QFont('AnyStyle', self.font_size))
-            self.account_label.setStyleSheet(self.headers_stylesheet)
-            self.widgets["labels"].append(self.account_label)
+            self.games_label = QLabel(self)
+            self.games_label.move(games_move_x, games_move_y + self.convToRectHeight(40))
+            games_move_y += self.convToRectHeight(40)
+            self.games_label.resize(self.convToRectWidth(90), self.convToRectHeight(40))
+            self.games_label.setText(str(sumData.get("games_played")))
+            self.games_label.setFont(QFont('AnyStyle', self.font_size))
+            self.games_label.setStyleSheet(self.headers_stylesheet)
+            self.widgets["labels"].append(self.games_label)
+
+            self.winrate_label = QLabel(self)
+            self.winrate_label.move(win_loss_move_x, win_loss_move_y + self.convToRectHeight(40))
+            win_loss_move_y += self.convToRectHeight(40)
+            self.winrate_label.resize(self.convToRectWidth(100), self.convToRectHeight(40))
+            self.winrate_label.setText(str(sumData.get('winrate')))
+            self.winrate_label.setFont(QFont('AnyStyle', self.font_size))
+            self.winrate_label.setStyleSheet(self.headers_stylesheet)
+            self.widgets["labels"].append(self.winrate_label)
 
             self.opgg_button = QPushButton(self)
             self.opgg_button.setCursor(QCursor(Qt.PointingHandCursor))
@@ -783,11 +819,12 @@ class MyWindow(QWidget):
                     "region": region,
                     "username": username,
                     "password": password,
-                    "level": "",
-                    "rank": "",
                 }
 
-                self.fetch_account_data()
+                self.fetch_account_data(
+                    pkID=pkID,
+                    sumData=self.accounts[pkID]
+                )
 
             self.GUI()
             self.set_geometry()
@@ -827,11 +864,12 @@ class MyWindow(QWidget):
                     "region": region,
                     "username": username,
                     "password": password,
-                    "level": "",
-                    "rank": "",
                 }
 
-                self.fetch_account_data()
+                self.fetch_account_data(
+                    pkID=pkID,
+                    sumData=self.accounts[pkID]
+                )
 
             self.GUI()
             self.set_geometry()
@@ -890,6 +928,12 @@ class MyWindow(QWidget):
         self.GUI()
         self.set_geometry()
         self.show_widgets()
+
+
+    def refresh_button_clicked(self):
+        self.collecting_data = True
+        self.updateWindow()
+        self.fetch_account_data()
     
 
     # Checkbox actions
@@ -972,16 +1016,47 @@ class MyWindow(QWidget):
                     "region": region,
                     "username": username,
                     "password": password,
-                    "level": "",
                     "rank": "",
+                    "winrate": "",
+                    "games_played": ""
                 }
+
+
+    def sort_accounts_by_rank(self):
+        def rank_to_value(rank):
+            tiers = ["Challenger", "GrandMaster", "Master", "Diamond", "Emerald", "Platinum", "Gold", "Silver", "Bronze", "Iron", "Unranked"]
+            roman_numerals = {"I": 1, "II": 2, "III": 3, "IV": 4}
+            max_lp = 100
+
+            if "Challenger" in rank or "GrandMaster" in rank or "Master" in rank:
+                parts = rank.split()
+                tier = parts[0]
+                lp = max_lp - int(parts[2]) if len(parts) > 1 else max_lp
+                numeral = 0
+            elif "Unranked" in rank:
+                tier = "Unranked"
+                numeral = 0
+                lp = max_lp
+            else:
+                parts = rank.split()
+                tier = parts[0]
+                numeral = roman_numerals[parts[1]]
+                lp = max_lp - int(parts[3]) if len(parts) > 3 else max_lp
+
+            return tiers.index(tier) * 500 + numeral * 100 + lp
+
+        # Sort the dictionary items
+        sorted_accounts = sorted(self.accounts.items(), key=lambda item: rank_to_value(item[1]["rank"]))
+
+        # Convert back to a dictionary
+        self.accounts = dict(sorted_accounts)
 
     
 #-----------------------------------------------------------------------------------------------------
 # Threading funcs
     # Fetch summoner data and append to self.summoner_data list
-    def fetch_account_data(self):    
-        self.collecting_data = True    
+    def fetch_account_data(self, pkID: int | None=None, sumData: dict | None=None) -> None:
+        self.collecting_data = True
         threads = []  # List to hold all threads
         finished_threads = 0  # Counter for finished threads
 
@@ -990,39 +1065,55 @@ class MyWindow(QWidget):
             finished_threads += 1
             if finished_threads == len(threads):
                 self.collecting_data = False
+                self.sort_accounts_by_rank()
                 self.updateWindow()
 
+        if pkID is None or sumData is None:    
+            for pkID, sumData in self.accounts.items():
+                thread = Thread(target=self.scrape_accounts, args=(pkID, sumData, callback))
+                thread.start()
+                threads.append(thread)  # Add the thread to the list
 
-        for pkID, sumData in self.accounts.items():
-            thread = Thread(target=self.scrape_account, args=(pkID, sumData, callback))
+        else:
+            thread = Thread(target=self.scrape_accounts, args=(pkID, sumData, callback))
             thread.start()
             threads.append(thread)  # Add the thread to the list
 
 
-    def scrape_account(self, pkID: int, sumData: dict, callback: callable) -> None:
+    def scrape_accounts(self, pkID: int, sumData: dict, callback: callable) -> None:
         url = f"{LOG_URL}{str.lower(sumData.get('region'))}/{sumData.get('summoner_name')}"
         response = requests.get(url, headers=HEADERS)
         soup = BeautifulSoup(response.content, 'html.parser')
         level = int(soup.find("div", class_="bannerSubtitle").text.strip().split()[1])
+        games_played = soup.find("div", id="graphDD4", class_="pie-chart small").text.strip()
+        winrate = soup.find("div", id="graphDD5", class_="pie-chart small").text.strip()
+
+        if "%" in games_played:
+            games_played, winrate = winrate, games_played
+        if int(games_played) < 5:
+            winrate = "N/A" 
+
         try:
             rank = soup.find("div", class_="leagueTier").text.strip()
+            if "Master" in rank or "Grandmaster" in rank or "Challenger" in rank:
+                rank, lp, lp_string = rank.split()
+                rank = f"{rank} - {lp} {lp_string}"
+            elif "Diamond" in rank:
+                rank, tier, lp, lp_string = rank.split()
+                rank = f"{rank} {tier} - {lp} {lp_string}"
+            elif rank != "Unranked":
+                try:
+                    lp = soup.find("span", class_="leaguePoints").text.strip()
+                    rank = rank + " - " + lp + " LP"
+                except:
+                    pass
         except:
             rank = "Unranked"
-        if "Master" in rank or "Grandmaster" in rank or "Challenger" in rank:
-            rank, lp, lp_string = rank.split()
-            rank = f"{rank} - {lp} {lp_string}"
-        elif "Diamond" in rank:
-            rank, tier, lp, lp_string = rank.split()
-            rank = f"{rank} {tier} - {lp} {lp_string}"
-        elif rank != "Unranked":
-            try:
-                lp = soup.find("span", class_="leaguePoints").text.strip()
-                rank = rank + " - " + lp + " LP"
-            except:
-                pass
-
+    
         self.accounts[pkID]["level"] = level
         self.accounts[pkID]["rank"] = rank
+        self.accounts[pkID]["games_played"] = games_played
+        self.accounts[pkID]["winrate"] = winrate
 
         callback()
 
