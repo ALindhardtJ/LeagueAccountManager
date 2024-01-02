@@ -42,8 +42,6 @@ class LolAccountManagerApp(QWidget):
 #Defining user interfaces of different windows
 
     def GUI_account_manager(self):
-        print(len(self.children()))
-
         widgets = {
             "labels": [],
             "buttons": [],
@@ -85,8 +83,6 @@ class LolAccountManagerApp(QWidget):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - # 
 
     def GUI_add_account(self):
-        print(len(self.children()))
-
         widgets = {
             "labels": [],
             "buttons": [],
@@ -119,8 +115,6 @@ class LolAccountManagerApp(QWidget):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - # 
     
     def GUI_app_configurations(self):
-        print(len(self.children()))
-
         widgets = {
             "labels": [],
             "buttons": [],
@@ -139,8 +133,6 @@ class LolAccountManagerApp(QWidget):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - # 
 
     def GUI_info(self):
-        print(len(self.children()))
-
         widgets = {
             "labels": [],
             "buttons": [],
@@ -173,8 +165,6 @@ class LolAccountManagerApp(QWidget):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - # 
 
     def GUI_edit(self):
-        print(len(self.children()))
-
         widgets = {
             "labels": [],
             "buttons": [],
@@ -207,8 +197,6 @@ class LolAccountManagerApp(QWidget):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - # 
 
     def GUI_skins_champions(self):
-        print(len(self.children()))
-
         widgets = {
             "labels": [],
             "buttons": [],
