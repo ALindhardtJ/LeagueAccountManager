@@ -1,4 +1,4 @@
-import webbrowser, subprocess, psutil, os, copy
+import webbrowser, subprocess, psutil, os
 from pywinauto.uia_defines import IUIA
 from pywinauto import Application, findwindows
 from time import sleep, time

@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtGui import QFont, QPixmap, QCursor
 from PyQt5.QtCore import Qt, QTimer
 
+
+
 class Labels:
     def __init__(self, parent) -> None:
         self.parent = parent

@@ -3,13 +3,6 @@ from PyQt5.QtWidgets import QCheckBox
 from utilities import obj_names
 from PyQt5.QtWidgets import QLineEdit
 
-#Class follows style of:
-# 1. check box creation function
-# 1. check box clicked action function
-# 2. check box creation function
-# 2. check box clicked action function
-# ....
-# ....
 
 
 class CheckBoxes:

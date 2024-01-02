@@ -217,48 +217,6 @@ class LolAccountManagerApp(QWidget):
             "check_boxes": [],
         }
 
-        from PyQt5.QtCore import Qt
-        from PyQt5.QtWidgets import QGridLayout, QGroupBox, QPushButton, QScrollArea, QVBoxLayout
-
-        self.lol_account_manager_logo = self.labels.lol_account_manager_logo()
-        self.button_account_manager = self.buttons.account_manager_button()
-        self.button_skins = self.buttons.skins_champions_skins()
-        self.button_champions = self.buttons.skins_champions_champions()
-        
-
-        self.grid_layout = QGridLayout(self)
-        # self.widgets["grid_layouts"].append(self.grid_layout)
-        for i in range(10):
-            self.grid_layout.addWidget(QPushButton("Button1", self), i+1,1)
-            self.grid_layout.addWidget(QPushButton("Button2", self), i+1,2)
-
-        self.group_box = QGroupBox(self)
-        self.widgets["group_box"].append(self.group_box)
-        self.group_box.setLayout(self.grid_layout)
-
-        self.scroll_area = QScrollArea(self)
-        self.widgets["scroll_area"].append(self.scroll_area)
-        self.scroll_area.setWidget(self.group_box)
-        self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setFixedHeight(ScalingUtils.height(690))
-
-        if self.layout() is None:
-            print("layout is None:", self.layout())
-            self.v_box_layout = QVBoxLayout(self)
-            # self.widgets["v_box_layouts"].append(self.v_box_layout)
-            self.v_box_layout.setAlignment(Qt.AlignmentFlag.AlignBottom)
-            self.v_box_layout.addWidget(self.scroll_area)
-        
-            self.setLayout(self.v_box_layout)
-            print(self.layout())
-        else: 
-            self.layout().addWidget(self.scroll_area)
-        
-        
-        if self.champions_button_checked:
-            print("champions!!!")
-        else:
-            print("skins!!!")
         
         self.set_geometry_skins_champions()
 

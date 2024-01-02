@@ -298,14 +298,4 @@ class AccountManagerDB():
 
 #-----------------------------------------------------------------------
 dbHandler = AccountManagerDB()
-# dbHandler.print_skins()
-# dbHandler.print_account_skins()
-# print(dbHandler.get_champions_by_account(account_id=2))
-# print(dbHandler.get_skins_by_account(account_id=14))
-# print(dbHandler.get_accounts_by_champion(champion_name="Riven"))
-# print(dbHandler.get_accounts_by_skin(skin_name="odyssey kha'zix"))
-# dbHandler.drop_table(table_name="champions")
-# dbHandler.drop_table(table_name="skins")
-# dbHandler.drop_table(table_name="account_skins")
-# dbHandler.drop_table(table_name="account_champions")
 #-----------------------------------------------------------------------

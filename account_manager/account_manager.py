@@ -207,7 +207,7 @@ class AccountManager:
 
 
 
-class Account(AccountManager):
+class Account():
     def __init__(self, parent, account_id: int, summoner_name: str, region: str, tagline: str, username: str, password: str):
         self.parent = parent
         self.__account_id: int = account_id

@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QLineEdit, QCompleter
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QStringListModel, Qt
 from database import dbHandler
-import copy
 from utilities import obj_names
 
 
