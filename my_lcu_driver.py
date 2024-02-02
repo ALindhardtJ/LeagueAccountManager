@@ -13,7 +13,7 @@ class MyLcuDriver(QThread):
         self.connector = Connector()
         self.account_data_fetched: bool = False
         self.champions_imported: bool = False
-        self.skins_imported = bool = False
+        self.skins_imported: bool = False
         self.account_id: int | None = None
         self.summoner_name: str | None = None
         self.summoner_tagline: str | None = None
